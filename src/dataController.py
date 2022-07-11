@@ -101,17 +101,31 @@ class dataflowEnable():
 
         while not rospy.is_shutdown():
             if not self.pause: 
-                self.joint.writeValue(4, int(self.motors[MOTORS_IDX["EyelidRightUp"]]))
-                self.joint.writeValue(5, int(self.motors[MOTORS_IDX["EyelidLeftUp"]]))
-                self.joint.writeValue(6, int(self.motors[MOTORS_IDX["EyelidRightDown"]]))
-                self.joint.writeValue(7, int(self.motors[MOTORS_IDX["EyelidLeftDown"]]))
-                self.joint.writeValue(10, int(self.motors[MOTORS_IDX["Mouth"]]))
-                self.joint.writeValue(0, int(self.motors[MOTORS_IDX["EyebrowRightHeight"]]))
-                self.joint.writeValue(1, int(self.motors[MOTORS_IDX["EyebrowLeftHeight"]]))
-                self.joint.writeValue(2, int(self.motors[MOTORS_IDX["EyebrowRightAngle"]]))
-                self.joint.writeValue(3, int(self.motors[MOTORS_IDX["EyebrowLeftAngle"]]))
-                self.joint.writeValue(8, int(self.motors[MOTORS_IDX["EyeHorizontal"]]))
-                self.joint.writeValue(9, int(self.motors[MOTORS_IDX["EyeVertical"]]))
+                self.send_eyelids = [
+                    int(self.motors[MOTORS_IDX["EyelidRightUp"]]), 
+                    int(self.motors[MOTORS_IDX["EyelidLeftUp"]]), 
+                    int(self.motors[MOTORS_IDX["EyelidRightDown"]]), 
+                    int(self.motors[MOTORS_IDX["EyelidLeftDown"]]),
+                ]
+                self.send_eyebrowns = [
+                    int(self.motors[MOTORS_IDX["EyebrowRightHeight"]]),
+                    int(self.motors[MOTORS_IDX["EyebrowLeftHeight"]]),
+                    int(self.motors[MOTORS_IDX["EyebrowRightAngle"]]),
+                    int(self.motors[MOTORS_IDX["EyebrowLeftAngle"]]),
+                ]
+                self.send_eyes = [
+                    int(self.motors[MOTORS_IDX["EyeHorizontal"]]),
+                    int(self.motors[MOTORS_IDX["EyeVertical"]]),
+                ]
+                self.mouth = [
+                    int(self.motors[MOTORS_IDX["Mouth"]]),
+                ]
+                # send the values for arduino
+                self.joint.writeValue(address=0, value=self.send_eyelids, size=4)
+                self.joint.writeValue(address=1, value=self.send_eyebrowns, size=4)
+                self.joint.writeValue(address=2, value=self.send_eyes, size=2)
+                self.joint.writeValue(address=3, value=self.mouth, size=1)
+                # send the values for dynamixel
                 self.neckHorizontal.sendGoalAngle(self.motors[MOTORS_IDX["NeckHorizontal"]])
                 self.neckVertical.sendGoalAngle(self.motors[MOTORS_IDX["NeckVertical"]])
             rate.sleep()

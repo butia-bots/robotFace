@@ -300,9 +300,9 @@ class JointProtocol1(object):
         return v
 
     def writeValue(self, address, value, size=1):
-        if(size==1):
-            self.pack_handler.write1ByteTxRx(self.socket, self.servo_id, \
-                address, value)
-        elif(size==2):
-            dxl.write2ByteTxRx(self.socket, self.servo_id, \
-                address, value)
+        if size == 1:
+            self.pack_handler.write1ByteTxRx(self.socket, self.servo_id, address, value)
+        elif size == 2:
+            self.pack_handler.write2ByteTxRx(self.socket, self.servo_id, address, value)
+        elif size == 4:
+            self.pack_handler.write4ByteTxRx(self.socket, self.servo_id, address, value)
