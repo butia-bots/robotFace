@@ -111,6 +111,8 @@ class eyelidEnable():
 
         self.h_scared_params = rospy.get_param("butia_emotions/eyelid/scared/h")
         self.frequency_scared_params = rospy.get_param("butia_emotions/eyelid/scared/frequency")
+
+        self.frequency_blink = rospy.get_param("butia_emotions/eyelid/blink/frequency")
     
     def blink(self):
         while(True):
@@ -121,7 +123,7 @@ class eyelidEnable():
             self.setValues()
             self.animation = 0
             
-            time.sleep(frequency)  
+            time.sleep(self.frequency_blink)  
             
 
 if __name__ == '__main__':

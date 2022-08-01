@@ -54,6 +54,9 @@ butia_emotions:
       h: 90
       frequency: 1
 
+    blink:
+      frequency: 1.7
+
   neck:
 
     standard:
@@ -61,11 +64,11 @@ butia_emotions:
       vertical: 180
 
     happy:
-      horizontal: 180
+      horizontal: 210
       vertical: 180
     
     sad:
-      horizontal: 180
+      horizontal: 150
       vertical: 180
 
     rage:
